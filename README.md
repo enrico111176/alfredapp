@@ -14,3 +14,8 @@ There are two ways to search Leo:
 * en - The 'en' keyword searches for the english transation of a german word.
 
 Download the workflow: [Leo Dictionary](https://github.com/psistorm/alfredapp/blob/master/Leo%20Dictionary/LeoDictionary.alfredworkflow?raw=true)
+
+Release Notes:
+V 1.1:
+- Added two hotkey inputs, transferring the current selected text to Alfred for getting translation. The used hotkeys are not imported and need to be set as wished.
+- When hitting Shift+Enter on a result, the Leo site is opened showing the search.
