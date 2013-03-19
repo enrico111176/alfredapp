@@ -13,4 +13,4 @@ There are two ways to search Leo:
 * de - The 'de' keyword will search for the german translation of an english word.
 * en - The 'en' keyword searches for the english transation of a german word.
 
-Download the workflow: [Leo Dictionary](https://github.com/psistorm/alfredapp/blob/master/Leo%20Dictionary/Leo%20Dictionary.alfredworkflow?raw=true)
+Download the workflow: [Leo Dictionary](https://github.com/psistorm/alfredapp/blob/master/Leo%20Dictionary/LeoDictionary.alfredworkflow?raw=true)
