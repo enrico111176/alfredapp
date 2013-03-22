@@ -20,10 +20,10 @@ class Leo {
 
 		$str = $w->request($url);
 		$options = $leo->get($str);
-
+		
 		if ($options != array()) {
 			foreach($options as $option) {
-				$w->result(time(), $option->translatedWord, $option->translatedWord, $option->originalWord, $option->languageCode.".png", "yes", $option->originalWord);
+				$w->result(time(), "{".$this->translationCode."}".$option->translatedWord, $option->translatedWord, $option->originalWord, $option->languageCode.".png", "yes", $option->originalWord);
 			}
 		}
 		return $w->toxml();

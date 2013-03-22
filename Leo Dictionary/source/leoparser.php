@@ -33,7 +33,7 @@ class LeoParser{
 				$moreTags = $this->removeSmallTags($element);
 			} while($moreTags->length != 0);
 			$this->removeSmallTags($element);
-			
+
 			$isSearchWord = $this->isSearchWord($element);
 			$languageCode = $this->getLanguageCode($element);
 			
@@ -62,8 +62,11 @@ class LeoParser{
 	
 	function removeSmallTags(DOMElement $element) {
 		$subElements = $element->getElementsByTagName("small");
-		foreach ($subElements as $subElement) {
-			$element->removeChild($subElement);
+		try {
+			foreach ($subElements as $subElement) {
+				$element->removeChild($subElement);
+			}
+		} catch(Exception $e) {
 		}
 		return $element->getElementsByTagName("small")->length;
 	}
