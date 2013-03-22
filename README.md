@@ -23,3 +23,4 @@ V 1.1:
 V 1.2:
 - Only one keyword per language needed now. The language of the entered word is automatically detected.
 - Opening Leo with the selected word when hitting 'Shift + Enter'.
+- Fixed problem with german umlauts.
