@@ -108,11 +108,13 @@ $url = "{query}";
 
 preg_match("/{([^}]*)}(.*)/", $url, $matchResult);
 
-$code = $matchResult[1];
+$translationCode = $matchResult[1];
 $cleanedString = trim(preg_replace("/\s*\[[^]]*\]/", "", $matchResult[2]));
 $cleanedString = clean_utf8($cleanedString);
 
-shell_exec("open 'http://dict.leo.org/ende/?lp=ende&amp;lang=en&amp;searchLoc=0&amp;cmpType=relaxed&amp;sectHdr=on&amp;spellToler=&amp;search=".urlencode($cleanedString)."'");</string>
+$url = "http://dict.leo.org/".$translationCode."/?lang=en&amp;searchLoc=0&amp;search=".urlencode($cleanedString);
+
+shell_exec("open '$url'");</string>
 				<key>type</key>
 				<integer>1</integer>
 			</dict>
