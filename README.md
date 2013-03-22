@@ -20,6 +20,7 @@ Download the workflow: [Leo Dictionary](https://github.com/psistorm/alfredapp/bl
 Release Notes:
 V 1.1:
 - Added two hotkey inputs, transferring the current selected text to Alfred for getting translation. The used hotkeys are not imported and need to be set as wished.
+
 V 1.2:
 - Only one keyword per language needed now. The language of the entered word is automatically detected.
 - Opening Leo with the selected word when hitting 'Shift + Enter'.
