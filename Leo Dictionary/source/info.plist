@@ -6,7 +6,7 @@
 	<string>psistorm.alfed.leo</string>
 	<key>connections</key>
 	<dict>
-		<key>02E1F4D6-8FF7-426B-B95E-08EB45949AFF</key>
+		<key>206533A2-C691-4EBD-9DCE-29FFF6E4C718</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -18,14 +18,14 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>31A8458D-3872-4F14-967E-9AD2A1327B9E</string>
+				<string>2EFE8987-544C-4B60-9A2B-B43FEECCAFB7</string>
 				<key>modifiers</key>
-				<integer>0</integer>
+				<integer>131072</integer>
 				<key>modifiersubtext</key>
-				<string></string>
+				<string>Open translation with Leo</string>
 			</dict>
 		</array>
-		<key>53A64513-DADE-4DF5-986F-57AACE81D8AB</key>
+		<key>46CE4D42-DAE7-441F-8869-28CBDDD3DD4D</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -37,11 +37,30 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>31A8458D-3872-4F14-967E-9AD2A1327B9E</string>
+				<string>2EFE8987-544C-4B60-9A2B-B43FEECCAFB7</string>
+				<key>modifiers</key>
+				<integer>131072</integer>
+				<key>modifiersubtext</key>
+				<string>Open translation with Leo</string>
+			</dict>
+		</array>
+		<key>9066ECA5-A314-4CB1-98F4-5171E14A6706</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DC652A86-C1F2-43AF-BD30-510EC00724E7</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>2EFE8987-544C-4B60-9A2B-B43FEECCAFB7</string>
+				<key>modifiers</key>
+				<integer>131072</integer>
+				<key>modifiersubtext</key>
+				<string>Open translation with Leo</string>
 			</dict>
 		</array>
 	</dict>
@@ -58,30 +77,22 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string></string>
+				<key>escaping</key>
+				<integer>36</integer>
+				<key>script</key>
+				<string>require('utils.php');
+
+$url = "${query}";
+$cleanedUrl = clean_utf8(trim(preg_replace("/\s*\[[^]]*\]/", "", $url)));
+
+shell_exec("open 'http://dict.leo.org/ende/?lp=ende&amp;lang=en&amp;searchLoc=0&amp;cmpType=relaxed&amp;sectHdr=on&amp;spellToler=&amp;search=".urlencode($cleanedUrl)."'");</string>
+				<key>type</key>
+				<integer>1</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
+			<string>alfred.workflow.output.script</string>
 			<key>uid</key>
-			<string>DC652A86-C1F2-43AF-BD30-510EC00724E7</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>plusspaces</key>
-				<true/>
-				<key>url</key>
-				<string>http://dict.leo.org/ende/?lp=ende&amp;lang=en&amp;searchLoc=0&amp;cmpType=relaxed&amp;sectHdr=on&amp;spellToler=&amp;search={query}</string>
-				<key>utf8</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>31A8458D-3872-4F14-967E-9AD2A1327B9E</string>
+			<string>2EFE8987-544C-4B60-9A2B-B43FEECCAFB7</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -95,28 +106,15 @@
 				<key>runningsubtext</key>
 				<string>Retrieving suggestions from Leo</string>
 				<key>script</key>
-				<string>require('leoparser.php');
-require('workflows.php');
-$w = new Workflows();
-$leo = new LeoParser();
+				<string>require('leo.php');
 
 $in = "{query}";
-$url = "http://dict.leo.org/ende/?lp=ende&amp;lang=en&amp;searchLoc=0&amp;cmpType=relaxed&amp;sectHdr=on&amp;spellToler=&amp;search=".urlencode( $in );
-
-
-$str = $w-&gt;request($url);
-$options = $leo-&gt;get($str);
-
-if ($options != array()) {
-	foreach($options as $option) {
-		$w-&gt;result(time(), $option[1], $option[1], $option[0], '02E1F4D6-8FF7-426B-B95E-08EB45949AFF.png', 'yes', $option[0]);
-	}
-}
-echo $w-&gt;toxml();</string>
+$leo = new Leo("ende");
+echo $leo-&gt;getTranslations($in);</string>
 				<key>subtext</key>
-				<string>Get the german translation</string>
+				<string>Translate with Leo (German/English)</string>
 				<key>title</key>
-				<string>Translate with Leo</string>
+				<string>Leo Dictionary</string>
 				<key>type</key>
 				<integer>1</integer>
 				<key>withspace</key>
@@ -125,7 +123,20 @@ echo $w-&gt;toxml();</string>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>02E1F4D6-8FF7-426B-B95E-08EB45949AFF</string>
+			<string>9066ECA5-A314-4CB1-98F4-5171E14A6706</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>DC652A86-C1F2-43AF-BD30-510EC00724E7</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -135,30 +146,17 @@ echo $w-&gt;toxml();</string>
 				<key>escaping</key>
 				<integer>36</integer>
 				<key>keyword</key>
-				<string>en</string>
+				<string>df</string>
 				<key>runningsubtext</key>
-				<string>Retrieving results from Leo</string>
+				<string>Retrieving suggestions from Leo</string>
 				<key>script</key>
-				<string>require('leoparser.php');
-require('workflows.php');
-$w = new Workflows();
-$leo = new LeoParser();
+				<string>require('leo.php');
 
 $in = "{query}";
-$url = "http://dict.leo.org/ende/?lp=ende&amp;lang=en&amp;searchLoc=0&amp;cmpType=relaxed&amp;sectHdr=on&amp;spellToler=&amp;search=".urlencode( $in );
-
-
-$str = $w-&gt;request($url);
-$options = $leo-&gt;get($str);
-
-if ($options != array()) {
-	foreach($options as $option) {
-		$w-&gt;result(time(), $option[0], $option[0], $option[1], '53A64513-DADE-4DF5-986F-57AACE81D8AB.png', 'yes', $option[1]);
-	}
-}
-echo $w-&gt;toxml();</string>
+$leo = new Leo("frde");
+echo $leo-&gt;getTranslations($in);</string>
 				<key>subtext</key>
-				<string>Get the english translation</string>
+				<string>Translate with Leo (German/French)</string>
 				<key>title</key>
 				<string>Translate with Leo</string>
 				<key>type</key>
@@ -169,32 +167,68 @@ echo $w-&gt;toxml();</string>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>53A64513-DADE-4DF5-986F-57AACE81D8AB</string>
+			<string>46CE4D42-DAE7-441F-8869-28CBDDD3DD4D</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>36</integer>
+				<key>keyword</key>
+				<string>ds</string>
+				<key>runningsubtext</key>
+				<string>Retrieving suggestions from Leo</string>
+				<key>script</key>
+				<string>require('leo.php');
+
+$in = "{query}";
+$leo = new Leo("esde");
+echo $leo-&gt;getTranslations($in);</string>
+				<key>subtext</key>
+				<string>Translate with Leo (German/Spanish)</string>
+				<key>title</key>
+				<string>Translate with Leo</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>206533A2-C691-4EBD-9DCE-29FFF6E4C718</string>
 		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>02E1F4D6-8FF7-426B-B95E-08EB45949AFF</key>
+		<key>206533A2-C691-4EBD-9DCE-29FFF6E4C718</key>
 		<dict>
 			<key>ypos</key>
-			<real>130</real>
+			<real>300</real>
 		</dict>
-		<key>31A8458D-3872-4F14-967E-9AD2A1327B9E</key>
+		<key>2EFE8987-544C-4B60-9A2B-B43FEECCAFB7</key>
 		<dict>
 			<key>ypos</key>
-			<real>260</real>
+			<real>240</real>
 		</dict>
-		<key>53A64513-DADE-4DF5-986F-57AACE81D8AB</key>
+		<key>46CE4D42-DAE7-441F-8869-28CBDDD3DD4D</key>
 		<dict>
 			<key>ypos</key>
-			<real>10</real>
+			<real>170</real>
+		</dict>
+		<key>9066ECA5-A314-4CB1-98F4-5171E14A6706</key>
+		<dict>
+			<key>ypos</key>
+			<real>40</real>
 		</dict>
 		<key>DC652A86-C1F2-43AF-BD30-510EC00724E7</key>
 		<dict>
 			<key>ypos</key>
-			<real>60</real>
+			<real>100</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>

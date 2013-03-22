@@ -26,33 +26,66 @@ class LeoParser{
 		$output = "";
 
 		$i = 1;
-		$wordArray = array();
-		
+		$resultEntry = new ParserResult();		
 		foreach ($elements as $element) {
 			$subElements = $element->getElementsByTagName("small");
 			do {
 				$moreTags = $this->removeSmallTags($element);
 			} while($moreTags->length != 0);
 			$this->removeSmallTags($element);
+			
+			$isSearchWord = $this->isSearchWord($element);
+			$languageCode = $this->getLanguageCode($element);
+			
 			$value = utf8_decode(trim($element->nodeValue));
-
-			array_push($wordArray, $value);
-			if ($i % 2 == 0) {
-		    	array_push($resultArray, $wordArray);
-				$wordArray = array();
+			
+			if ($i % 2 != 0) {
+				if ($isSearchWord) {
+					$resultEntry->originalWord = $value;
+				} else {
+					$resultEntry->languageCode = $languageCode;
+					$resultEntry->translatedWord = $value;
+				}
+			} else {
+				if ($resultEntry->languageCode == "") {
+					$resultEntry->languageCode = $languageCode;
+					$resultEntry->translatedWord = $value;
+				} else {
+					$resultEntry->originalWord = $value;
+				}
+		    	array_push($resultArray, $resultEntry);
+				$resultEntry = new ParserResult();
  			}
 			$i++;
 		}
 	}
 	
-	function removeSmallTags($element) {
+	function removeSmallTags(DOMElement $element) {
 		$subElements = $element->getElementsByTagName("small");
 		foreach ($subElements as $subElement) {
 			$element->removeChild($subElement);
 		}
-		return $element->getElementsByTagName("small");
+		return $element->getElementsByTagName("small")->length;
 	}
 	
+	function isSearchWord(DOMElement $element) {
+		$subElements = $element->getElementsByTagName("b");
+		if ($subElements->length > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	function getLanguageCode(DOMElement $element) {
+		return $element->getAttribute("lang");
+	}
+	
+}
+
+class ParserResult {
+	public $translatedWord = "";
+	public $originalWord = "";
+	public $languageCode = "";
 }
 
 ?>
