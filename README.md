@@ -29,4 +29,4 @@ V 1.2:
 
 V 1.2.1:
 - Fixed problem with opening the URL in some cases.
-- Fixed problem with some words.
+- Fixed problem with some special words preventing results from being shown.
